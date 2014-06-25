@@ -20,7 +20,8 @@ install_requires = [
     'pep8',
     'pylint',
     'pyflakes',
-    'lxml'
+    'lxml',
+    'click==2.1',
 ]
 
 extras_require = {
@@ -38,7 +39,7 @@ extras_require = {
 }
 
 scripts = [
-    'bin/create-pypi',
+    'bin/blumpkin',
 ]
 
 setuptools.setup(
