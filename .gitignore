@@ -35,3 +35,7 @@ docs/_build
 
 # md preview
 .*.md.html
+
+# testin
+coverage.xml
+nosetests.xml

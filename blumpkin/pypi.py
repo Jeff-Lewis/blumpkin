@@ -24,7 +24,7 @@ def create_pypi(username, password, index, base_dir, dry):
             [
                 '[global]',
                 'extra-index-url = https://{}:{}@{}'.format(
-                        username, password, index
+                    username, password, index
                 )
             ]
         ),
@@ -46,7 +46,7 @@ def create_pypi(username, password, index, base_dir, dry):
             [
                 '[easy_install]',
                 'index_url = https://{}:{}@{}'.format(
-                        username, password, index
+                    username, password, index
                 )
             ]
         )
