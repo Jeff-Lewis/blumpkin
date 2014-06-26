@@ -2,8 +2,18 @@
 from __future__ import unicode_literals
 
 import click
+import logging
+import sys
 
 from blumpkin import coverage, pypi
+
+
+def setup_logging(log_level=logging.INFO):
+    logging.basicConfig(
+        level=log_level,
+        format='%(asctime)s : %(levelname)s : %(name)s : %(message)s',
+        stream=sys.stderr,
+    )
 
 
 @click.group()
@@ -16,4 +26,5 @@ cli.add_command(coverage.coverage)
 
 
 if __name__ == '__main__':
+    setup_logging()
     cli()

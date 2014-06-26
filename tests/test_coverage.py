@@ -13,20 +13,19 @@ class CoverageTestCase(TestCase):
 
     def test_coverage_deep(self):
         targets = {
-            'precog_service.models.funding_instruments': 94,
-            'precog_service.models.funding_instruments.cards': 96
+            'precog_service.models.funding_instruments': 93,
+            'precog_service.models.funding_instruments.cards': 93
         }
-        file_failed, package_failed = coverage.run_coverage(
-            self.path_to_fixture, targets, False, False
+        package_failed = coverage.run_coverage(
+            self.path_to_fixture, targets
         )
-        self.assertFalse(file_failed)
         self.assertFalse(package_failed)
 
     def test_coverage_fails(self):
         targets = {
             'precog_service.models.funding_instruments': 95,
         }
-        file_failed, package_failed = coverage.run_coverage(
-            self.path_to_fixture, targets, False, False
+        package_failed = coverage.run_coverage(
+            self.path_to_fixture, targets
         )
         self.assertTrue(package_failed)
