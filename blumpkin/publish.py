@@ -14,6 +14,7 @@ def publish(branch, index):
         click.echo('Not on the publishing branch')
         return
     args = ['python', 'setup.py', 'sdist', 'upload']
-    if index is not None:
+    if index:
         args += ['-r', 'alt']
+    print ' '.join(args)
     return call(args)
