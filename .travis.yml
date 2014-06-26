@@ -11,6 +11,7 @@ after_success:
 - coverage xml
 - blumpkin coverage coverage.xml blumpkin:90
 - find blumpkin -name "*.py" | xargs pep8 --ignore=E711 | tee pep8.out
+- blumpkin create-pypi
 - blumpkin publish --branch master
 env:
   global:

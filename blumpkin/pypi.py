@@ -18,16 +18,7 @@ def create_pypi(username, password, index, base_dir, dry):
     if not dry:
         os.path.exists(root) or os.mkdir(root)
 
-    for file_path, contents in (
-        (
-            os.path.join(root, 'pip.conf'),
-            [
-                '[global]',
-                'extra-index-url = https://{}:{}@{}'.format(
-                    username, password, index
-                )
-            ]
-        ),
+    files = [
         (
             os.path.join(os.path.expanduser(base_dir), '.pypirc'),
             [
@@ -36,12 +27,14 @@ def create_pypi(username, password, index, base_dir, dry):
                 '\talt' if index else '\tpypi',
                 '',
                 '[alt]' if index else '[pypi]',
-                'repository: {}'.format(index),
+                'repository: {}'.format(index) if index else '',
                 'username: {}'.format(username),
                 'password: {}'.format(password)
             ]
-        ),
-        (
+        )
+    ]
+    if index:
+        files += [(
             os.path.join(os.path.expanduser(base_dir), '.pydistutils.cfg'),
             [
                 '[easy_install]',
@@ -49,8 +42,18 @@ def create_pypi(username, password, index, base_dir, dry):
                     username, password, index
                 )
             ]
-        )
-    ):
+        ),
+        (
+            os.path.join(root, 'pip.conf'),
+            [
+                '[global]',
+                'extra-index-url = https://{}:{}@{}'.format(
+                    username, password, index
+                )
+            ]
+        )]
+
+    for file_path, contents in files:
         with open(file_path, 'w') as f:
             if dry:
                 print ''

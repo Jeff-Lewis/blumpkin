@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 import os as _os
 
 
-__version__ = '0.2.1'
+__version__ = '0.2.2'
 
 
 # TO use run:
@@ -12,7 +12,8 @@ __version__ = '0.2.1'
 config = dict(
     PYPI_USERNAME='omnibus',
     PYPI_PASSWORD=None,
-    PYPI_INDEX='https://pypi.vandelay.io/balanced/prod/',
+    PYPI_INDEX='pypi.vandelay.io/balanced/prod/+simple/',
+    PYPI_SERVER='https://pypi.vandelay.io/balanced/prod/',
     PUBLISH_BRANCH='master'
 )
 
