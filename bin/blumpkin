@@ -5,7 +5,7 @@ import click
 import logging
 import sys
 
-from blumpkin import coverage, pypi
+from blumpkin import coverage, pypi, publish
 
 
 def setup_logging(log_level=logging.INFO):
@@ -23,6 +23,7 @@ def cli():
 
 cli.add_command(pypi.create_pypi)
 cli.add_command(coverage.coverage)
+cli.add_command(publish.publish)
 
 
 if __name__ == '__main__':
