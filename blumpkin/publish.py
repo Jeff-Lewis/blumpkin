@@ -16,5 +16,4 @@ def publish(branch, index):
     args = ['python', 'setup.py', 'sdist', 'upload']
     if index is not None:
         args += ['-r', 'alt']
-    print args
-    #return call(args)
+    return call(args)
