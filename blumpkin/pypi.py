@@ -36,9 +36,9 @@ def create_pypi(username, password, index, base_dir, dry):
                 '\talt' if index else '\tpypi',
                 '',
                 '[alt]' if index else '[pypi]',
-                '\trepository: {}'.format(index),
-                '\tusername: {}'.format(username),
-                '\tpassword: {}'.format(password)
+                'repository: {}'.format(index),
+                'username: {}'.format(username),
+                'password: {}'.format(password)
             ]
         ),
         (
