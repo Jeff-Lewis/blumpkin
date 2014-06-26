@@ -10,5 +10,3 @@ def get_for_reals_path(file_name):
         ),
         file_name
     )
-
-

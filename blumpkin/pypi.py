@@ -22,7 +22,7 @@ def create_pypi(username, password, index, base_dir, dry):
             [
                 '[global]',
                 'extra-index-url = https://{}:{}@{}'.format(
-                        username, password, index
+                    username, password, index
                 )
             ]
         ),
@@ -45,7 +45,7 @@ def create_pypi(username, password, index, base_dir, dry):
             [
                 '[easy_install]',
                 'index_url = https://{}:{}@{}'.format(
-                        username, password, index
+                    username, password, index
                 )
             ]
         )
@@ -57,8 +57,9 @@ def create_pypi(username, password, index, base_dir, dry):
             for line in contents:
                 if dry:
                     print line
-                f.write(line)
-                f.write('\n')
+                else:
+                    f.write(line)
+                    f.write('\n')
             if not dry:
                 click.echo('wrote {}'.format(file_path))
 
