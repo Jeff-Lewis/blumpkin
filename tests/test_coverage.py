@@ -1,5 +1,7 @@
 from __future__ import unicode_literals
 
+import mock
+
 from . import TestCase, fixtures
 
 from blumpkin import coverage
@@ -31,8 +33,13 @@ class CoverageTestCase(TestCase):
         )
         self.assertTrue(package_failed)
 
-    def test_command(self):
-        targets = (
-            'precog_service:10',
-        )
-        coverage.handle_coverage(self.path_to_fixture, targets)
+    @mock.patch('blumpkin.coverage.sys.exit')
+    def test_command(self, exit):
+        for target, exits in (
+            (['precog_service:10'], False),
+            (['precog_service:100'], True),
+        ):
+            exit.reset_mock()
+            coverage.coverage.__dict__['callback'](
+                self.path_to_fixture, target)
+            self.assertEqual(exit.called, exits)
