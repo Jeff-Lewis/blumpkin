@@ -12,7 +12,7 @@ after_success:
 - blumpkin coverage coverage.xml blumpkin:90
 - find blumpkin -name "*.py" | xargs pep8 --ignore=E711 | tee pep8.out
 - PYPI_INDEX= PYPI_SERVER= blumpkin create-pypi
-- PYPI_INDEX= PYPI_SERVER= blumpkin publish --branch master
+- PYPI_INDEX= PYPI_SERVER= blumpkin publish --on-tag
 env:
   global:
   - PYPI_INDEX=
