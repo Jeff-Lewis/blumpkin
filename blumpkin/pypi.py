@@ -16,8 +16,7 @@ from . import config
 def create_pypi(username, password, index, server, base_dir, dry):
     root = os.path.expanduser(base_dir + '.pip')
 
-    if not dry:
-        os.path.exists(root) or os.mkdir(root)
+    os.path.exists(root) or (dry or os.mkdir(root))
 
     files = [
         (
