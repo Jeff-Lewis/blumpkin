@@ -6,10 +6,8 @@ whole. This script will parse the coverage.xml file and fail if the coverage of
 specified packages doesn't meet the thresholds given
 """
 from __future__ import unicode_literals
-import ast
 import logging
 import logging.config
-import os
 import sys
 
 import click
@@ -80,20 +78,24 @@ def run_coverage(filename, package_coverage_dict):
     return package_failed
 
 
-@click.command()
-@click.argument('filename')
-@click.argument('packages', nargs=10)
-def coverage(filename, packages):
+def handle_coverage(filename, packages):
     package_coverage_dict = {
         package: int(required_coverage) for
         package, required_coverage in (x.split(':') for x in packages if x)
     }
 
-    package_failed = run_coverage(
+    return run_coverage(
         filename, package_coverage_dict
     )
 
-    if package_failed:
+
+@click.command()
+@click.argument('filename')
+@click.argument('packages', nargs=10)
+def coverage(filename, packages):
+    failed = handle_coverage(filename, packages)
+
+    if failed:
         click.echo('Coverage test FAILED')
         sys.exit(1)
 

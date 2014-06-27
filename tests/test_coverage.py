@@ -24,8 +24,15 @@ class CoverageTestCase(TestCase):
     def test_coverage_fails(self):
         targets = {
             'precog_service.models.funding_instruments': 95,
+            'missing_package': 95,
         }
         package_failed = coverage.run_coverage(
             self.path_to_fixture, targets
         )
         self.assertTrue(package_failed)
+
+    def test_command(self):
+        targets = (
+            'precog_service:10',
+        )
+        coverage.handle_coverage(self.path_to_fixture, targets)
