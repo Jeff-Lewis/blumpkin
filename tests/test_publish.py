@@ -22,4 +22,3 @@ class PublishTestCase(TestCase):
         environ.get.return_value = 'master'
         publish.publish.__dict__['callback']('not_master', 'index')
         self.assertFalse(call.called)
-

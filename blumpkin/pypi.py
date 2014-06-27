@@ -34,24 +34,26 @@ def create_pypi(username, password, index, server, base_dir, dry):
         )
     ]
     if index:
-        files += [(
-            os.path.join(os.path.expanduser(base_dir), '.pydistutils.cfg'),
-            [
-                '[easy_install]',
-                'index_url = https://{}:{}@{}'.format(
-                    username, password, index
-                )
-            ]
-        ),
-        (
-            os.path.join(root, 'pip.conf'),
-            [
-                '[global]',
-                'extra-index-url = https://{}:{}@{}'.format(
-                    username, password, index
-                )
-            ]
-        )]
+        files += [
+            (
+                os.path.join(os.path.expanduser(base_dir), '.pydistutils.cfg'),
+                [
+                    '[easy_install]',
+                    'index_url = https://{}:{}@{}'.format(
+                        username, password, index
+                    )
+                ]
+            ),
+            (
+                os.path.join(root, 'pip.conf'),
+                [
+                    '[global]',
+                    'extra-index-url = https://{}:{}@{}'.format(
+                        username, password, index
+                    )
+                ]
+            )
+        ]
 
     for file_path, contents in files:
         with open(file_path, 'w') as f:
