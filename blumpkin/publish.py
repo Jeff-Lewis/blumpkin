@@ -2,9 +2,11 @@ from __future__ import unicode_literals
 
 import os
 from subprocess import call
+
 import click
 
 from . import config
+
 
 @click.command('publish')
 @click.option('--branch', nargs=1, default=config['PUBLISH_BRANCH'])
