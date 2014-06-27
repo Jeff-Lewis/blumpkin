@@ -25,8 +25,9 @@ class PyPiTestCase(TestCase):
                 pypi.create_pypi.__dict__['callback'](
                     username='john',
                     password='pass',
-                    index='pypi.vandelay.io',
+                    index='index',
                     base_dir='/tmp',
+                    server='server',
                     dry=dry
                 )
 
