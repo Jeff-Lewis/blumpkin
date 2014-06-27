@@ -16,5 +16,6 @@ after_success:
 env:
   global:
   - PYPI_INDEX=
+  - PYPI_SERVER=
   - PYPI_USERNAME=balanced-butler
   - secure: X6KAYL6xpcovJAAONRav8B712erQhU1G/loi9CNQM3nvrKfBg4zqx+5nkmktdb13Bgv3HDpzRmVk4222Z9TGXTnChK3O7L2Vb0TwUG1s82GO4Mqsdv97JpxoKlR4HZ4XP9AN7zClieOhSDachG3NSpRLipAW9neLQFF9hS53Ni8=

@@ -10,9 +10,10 @@ from . import config
 @click.option('--username', nargs=1, default=config['PYPI_USERNAME'])
 @click.option('--password', nargs=1, default=config['PYPI_PASSWORD'])
 @click.option('--index', nargs=1, default=config['PYPI_INDEX'])
+@click.option('--server', nargs=1, default=config['PYPI_SERVER'])
 @click.option('--base-dir', nargs=1, default='~/')
 @click.option('--dry', nargs=1, type=bool, default=False)
-def create_pypi(username, password, index, base_dir, dry):
+def create_pypi(username, password, index, server, base_dir, dry):
     root = os.path.expanduser(base_dir + '.pip')
 
     if not dry:
@@ -27,7 +28,7 @@ def create_pypi(username, password, index, base_dir, dry):
                 '\talt' if index else '\tpypi',
                 '',
                 '[alt]' if index else '[pypi]',
-                'repository: {}'.format(index) if index else '',
+                'repository: {}'.format(server) if server else '',
                 'username: {}'.format(username),
                 'password: {}'.format(password)
             ]
