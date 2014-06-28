@@ -15,12 +15,12 @@ from . import config
 def publish(branch, index, on_tag):
     if on_tag:
         tag = os.environ.get('TRAVIS_TAG')
-        version = check_output('python setup.py --version', shell=True)
+        version = check_output('python setup.py --version', shell=True).strip()
         if not tag:
             click.echo('Not on tagged version, not releasing')
             return
         if tag != 'v{}'.format(version):
-            click.echo('Tag {} != version v{}'.format(tag, version))
+            click.echo('Tag "{}" != version "v{}"'.format(tag, version))
             return
     elif branch and branch != os.environ.get('TRAVIS_BRANCH', branch):
         click.echo('Not on the publishing branch')
