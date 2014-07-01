@@ -3,6 +3,7 @@ import sys
 
 import click
 import pytest
+import subprocess
 
 
 @click.command('test')
@@ -14,12 +15,13 @@ def test(cov, cov_report, target):
 
 
 def run(cov, cov_report, target):
-    args = []
+    args = ['py.test']
+    args.append('-p cov')
     if cov:
         args.append('--cov=' + cov)
     for report in cov_report:
-        args.append('--cov-report=' + report)
+        args.append('--cov-report')
+        args.append(report)
     if target:
         args.append(target)
-    arg_str = ' '.join(args)
-    return pytest.main(str(arg_str))
+    return subprocess.call(args)
