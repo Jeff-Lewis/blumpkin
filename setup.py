@@ -17,11 +17,13 @@ install_requires = [
     'nosexcover==1.0.10',
     'nose-cov==1.6',
     'nose_xunitmp==0.3.1',
+    'pytest>=2.5.0,<2.6.0',
+    'pytest-cov>=1.7.0,<1.8.0',
     'pep8',
     'pylint',
     'pyflakes',
     'lxml',
-    'click==2.1',
+    'click>=2.1.0,<3.0.0',
 ]
 
 extras_require = {
