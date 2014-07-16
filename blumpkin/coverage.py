@@ -24,17 +24,23 @@ PACKAGE_SEPARATOR = '.'
 
 def check_package_coverage(root, package_coverage_dict):
     coverage_results = {}
+    coverage_files = {}
     classes = FILES_XPATH(root)
 
     for cls in classes:
         class_path = cls.get('filename')
         class_coverage = float(cls.get('line-rate', '0.0')) * 100
         clses = class_path[:-3].split('/')
+        if not cls.xpath('lines')[0].getchildren():
+            # ignore files that do not have any lines in them
+            continue
         for count in range(len(clses) + 1, 1, -1):
             target = '.'.join(clses[:count - 1])
             if target in package_coverage_dict:
                 coverage_results.setdefault(target, [])
                 coverage_results[target].append(class_coverage)
+                coverage_files.setdefault(target, [])
+                coverage_files[target].append(class_path)
                 break
 
     failed = False
@@ -51,6 +57,13 @@ def check_package_coverage(root, package_coverage_dict):
                     package, actual, required
                 )
             )
+            for i in xrange(len(coverages)):
+                if coverages[i] < required:
+                    logger.warning(
+                        'File {} is bellow threshold with {}'.format(
+                            coverage_files[package][i], coverage_results[package][i]
+                        )
+                    )
             failed = True
         else:
             logger.info('PASS {}% >= {}%'.format(actual, required))
