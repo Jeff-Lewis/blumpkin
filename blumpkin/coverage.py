@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 import logging
 import logging.config
 import sys
+from collections import defaultdict
 
 import click
 from lxml import etree
@@ -23,18 +24,22 @@ PACKAGE_SEPARATOR = '.'
 
 
 def check_package_coverage(root, package_coverage_dict):
-    coverage_results = {}
+    coverage_results = defaultdict(list)
+    coverage_files = defaultdict(list)
     classes = FILES_XPATH(root)
 
     for cls in classes:
         class_path = cls.get('filename')
         class_coverage = float(cls.get('line-rate', '0.0')) * 100
         clses = class_path[:-3].split('/')
+        if not cls.xpath('lines')[0].getchildren():
+            # ignore files that do not have any lines in them
+            continue
         for count in range(len(clses) + 1, 1, -1):
             target = '.'.join(clses[:count - 1])
             if target in package_coverage_dict:
-                coverage_results.setdefault(target, [])
                 coverage_results[target].append(class_coverage)
+                coverage_files[target].append(class_path)
                 break
 
     failed = False
@@ -51,6 +56,12 @@ def check_package_coverage(root, package_coverage_dict):
                     package, actual, required
                 )
             )
+            for index, coverage_percent in enumerate(coverages):
+                if coverage_percent < required:
+                    logger.warning(
+                        'File {} is bellow threshold with {}'.format(
+                            coverage_files[package][index],
+                            coverage_results[package][index]))
             failed = True
         else:
             logger.info('PASS {}% >= {}%'.format(actual, required))
