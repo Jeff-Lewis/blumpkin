@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 import logging
 import logging.config
 import sys
+from collections import defaultdict
 
 import click
 from lxml import etree
@@ -23,8 +24,8 @@ PACKAGE_SEPARATOR = '.'
 
 
 def check_package_coverage(root, package_coverage_dict):
-    coverage_results = {}
-    coverage_files = {}
+    coverage_results = defaultdict(list)
+    coverage_files = defaultdict(list)
     classes = FILES_XPATH(root)
 
     for cls in classes:
@@ -37,9 +38,7 @@ def check_package_coverage(root, package_coverage_dict):
         for count in range(len(clses) + 1, 1, -1):
             target = '.'.join(clses[:count - 1])
             if target in package_coverage_dict:
-                coverage_results.setdefault(target, [])
                 coverage_results[target].append(class_coverage)
-                coverage_files.setdefault(target, [])
                 coverage_files[target].append(class_path)
                 break
 
@@ -57,13 +56,12 @@ def check_package_coverage(root, package_coverage_dict):
                     package, actual, required
                 )
             )
-            for i in xrange(len(coverages)):
-                if coverages[i] < required:
+            for index, coverage_percent in enumerate(coverages):
+                if coverage_percent < required:
                     logger.warning(
                         'File {} is bellow threshold with {}'.format(
-                            coverage_files[package][i], coverage_results[package][i]
-                        )
-                    )
+                            coverage_files[package][index],
+                            coverage_results[package][index]))
             failed = True
         else:
             logger.info('PASS {}% >= {}%'.format(actual, required))
