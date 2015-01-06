@@ -19,7 +19,7 @@ def publish(branch, index, on_tag):
         if not tag:
             click.echo('Not on tagged version, not releasing')
             return
-        if tag != 'v{}'.format(version):
+        if tag not in ('v{}'.format(version), version):
             click.echo('Tag "{}" != version "v{}"'.format(tag, version))
             return
     elif branch and branch != os.environ.get('TRAVIS_BRANCH', branch):
